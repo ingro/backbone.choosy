@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git://github.com/ingro/backbone.choosy.git"
   },
   "bugs": {
-    "url": ""
+    "url": "https://github.com/ingro/backbone.choosy/issues"
   },
   "keywords": [
     "backbone",
@@ -19,11 +19,11 @@
     "select"
   ],
   "author": {
-    "name": "Emanuele Ingrosso"
+    "name": "Emanuele Ingrosso",
     "email": "ingro85@gmail.com"
   },
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/ingro/backbone.choosy",
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
