@@ -1,0 +1,33 @@
+{
+  "name": "backbone.choosy",
+  "version": "0.1.0",
+  "description": "Backbone.Chooser ported to ES6 and UMD",
+  "main": "dist/backbone.choosy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "keywords": [
+    "backbone",
+    "chooser",
+    "select"
+  ],
+  "author": {
+    "name": "Emanuele Ingrosso"
+    "email": "ingro85@gmail.com"
+  },
+  "license": "MIT",
+  "homepage": "",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.2.0"
+  }
+}
