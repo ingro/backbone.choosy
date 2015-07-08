@@ -25,9 +25,13 @@
   "license": "MIT",
   "homepage": "https://github.com/ingro/backbone.choosy",
   "devDependencies": {
+    "backbone": "^1.2.1",
+    "chai": "^3.0.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^1.2.0"
+    "gulp-uglify": "^1.2.0",
+    "mocha": "^2.2.5",
+    "underscore": "^1.8.3"
   }
 }

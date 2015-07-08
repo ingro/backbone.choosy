@@ -26,7 +26,7 @@
             });
 
             this.chosen = false;
-            // this.model.set('chosen:', false);
+            this.model.set('chosen:', false);
         }
 
         _publicMethoods() {
@@ -43,7 +43,7 @@
             }
 
             this.chosen = true;
-            // this.model.set('chosen:', true, options);
+            this.model.set('chosen:', true, options);
 
             if (options.silent != true) {
                 this.model.trigger('model:chosen', this.model);
@@ -62,7 +62,7 @@
             }
 
             this.chosen = false;
-            // this.model.set('chosen:', false, options);
+            this.model.set('chosen:', false, options);
 
             if (options.silent != true) {
                 this.model.trigger('model:unchosen', this.model);
