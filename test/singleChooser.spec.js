@@ -37,6 +37,7 @@ describe('SingleChooser', function() {
         assert.property(collection, 'getChosen');
         assert.property(collection, 'getFirstChosen');
         assert.property(collection, 'chooseById');
+        assert.property(collection, 'chooseNone');
 
         assert.isObject(collection._chooser.chosen);
         assert.strictEqual(collection.getChosen().length, 0);
@@ -60,6 +61,12 @@ describe('SingleChooser', function() {
         assert.strictEqual(collection.getFirstChosen(), modelB);
 
         collection.unchoose(modelB);
+
+        assert.strictEqual(collection.getChosen().length, 0);
+        assert.strictEqual(collection.getFirstChosen(), undefined);
+
+        collection.choose(modelB);
+        collection.chooseNone();
 
         assert.strictEqual(collection.getChosen().length, 0);
         assert.strictEqual(collection.getFirstChosen(), undefined);
@@ -91,6 +98,17 @@ describe('SingleChooser', function() {
         triggerSpy.reset();
 
         collection.unchoose(modelB);
+
+        expect(triggerSpy).to.have.not.been.called;
+
+        collection.choose(modelA);
+        collection.chooseNone();
+
+        expect(triggerSpy).to.have.been.calledWith('collection:unchoose:one', undefined);
+
+        triggerSpy.reset();
+
+        collection.chooseNone();
 
         expect(triggerSpy).to.have.not.been.called;
     })

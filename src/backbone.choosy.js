@@ -111,7 +111,7 @@
         }
 
         _publicMethoods() {
-            return ['choose', 'unchoose', 'getChosen', 'getFirstChosen', 'chooseById'];
+            return ['choose', 'unchoose', 'getChosen', 'getFirstChosen', 'chooseById', 'chooseNone'];
         }
 
         getChosen() {
@@ -124,6 +124,16 @@
 
         modelInChosen(model) {
             return _.contains(_.keys(this.chosen), model.cid);
+        }
+
+        chooseNone(options = {}) {
+            if (this.getChosen().length === 0) {
+                return;
+            }
+
+            this.removeModels();
+
+            this.triggerEvent(false, options);
         }
 
         addModel(model, options = {}) {
@@ -194,6 +204,14 @@
 
             this.triggerEvent('collection:unchoose:one', options);
         }
+
+        _getEvent() {
+            if (this.getChosen().length === 0) {
+                return 'collection:unchoose:one';
+            }
+
+            return 'collection:choose:one';
+        }
     }
 
     class MultiChooser extends BaseChooser {
@@ -201,7 +219,7 @@
         constructor(collection) {
             super(collection);
 
-            const additionalMethods = ['chooseAll', 'chooseNone', 'chooseByIds'];
+            const additionalMethods = ['chooseAll', 'chooseByIds'];
 
             _.each(additionalMethods, (method) => {
                 this.collection[method] = _.bind(this[method], this);
@@ -266,7 +284,7 @@
             this.triggerEvent(false, options);
         }
 
-        chooseNone(options = {}) {
+        /*chooseNone(options = {}) {
             if (this.getChosen().length === 0) {
                 return;
             }
@@ -274,7 +292,7 @@
             this.removeModels();
 
             this.triggerEvent(false, options);
-        }
+        }*/
 
         chooseByIds(ids = [], options = {}) {
             _.defaults(options, { chooseNone: true });
@@ -289,12 +307,12 @@
         }
 
         _getEvent() {
-            if (this.collection.length === this.getChosen().length) {
-                return 'collection:chose:all';
-            }
-
             if (this.getChosen().length === 0) {
                 return 'collection:chose:none';
+            }
+
+            if (this.collection.length === this.getChosen().length) {
+                return 'collection:chose:all';
             }
 
             return 'collection:chose:some';

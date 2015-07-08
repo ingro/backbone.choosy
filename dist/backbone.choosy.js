@@ -140,7 +140,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         _createClass(BaseChooser, [{
             key: '_publicMethoods',
             value: function _publicMethoods() {
-                return ['choose', 'unchoose', 'getChosen', 'getFirstChosen', 'chooseById'];
+                return ['choose', 'unchoose', 'getChosen', 'getFirstChosen', 'chooseById', 'chooseNone'];
             }
         }, {
             key: 'getChosen',
@@ -156,6 +156,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             key: 'modelInChosen',
             value: function modelInChosen(model) {
                 return _.contains(_.keys(this.chosen), model.cid);
+            }
+        }, {
+            key: 'chooseNone',
+            value: function chooseNone() {
+                var options = arguments[0] === undefined ? {} : arguments[0];
+
+                if (this.getChosen().length === 0) {
+                    return;
+                }
+
+                this.removeModels();
+
+                this.triggerEvent(false, options);
             }
         }, {
             key: 'addModel',
@@ -255,6 +268,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                 this.triggerEvent('collection:unchoose:one', options);
             }
+        }, {
+            key: '_getEvent',
+            value: function _getEvent() {
+                if (this.getChosen().length === 0) {
+                    return 'collection:unchoose:one';
+                }
+
+                return 'collection:choose:one';
+            }
         }]);
 
         return SingleChooser;
@@ -268,7 +290,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             _get(Object.getPrototypeOf(MultiChooser.prototype), 'constructor', this).call(this, collection);
 
-            var additionalMethods = ['chooseAll', 'chooseNone', 'chooseByIds'];
+            var additionalMethods = ['chooseAll', 'chooseByIds'];
 
             _.each(additionalMethods, function (method) {
                 _this4.collection[method] = _.bind(_this4[method], _this4);
@@ -297,7 +319,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                 _.each(_.chain([args]).flatten().value(), function (model) {
                     if (_this5.modelInChosen(model)) {
-                        // Check if continue the cycle
+                        // Check if this continue the cycle
                         return true;
                     }
 
@@ -325,7 +347,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                 _.each(_.chain([args]).flatten().value(), function (model) {
                     if (!_this6.modelInChosen(model)) {
-                        // Check if continue the cycle
+                        // Check if this continue the cycle
                         return true;
                     }
 
@@ -356,20 +378,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 this.triggerEvent(false, options);
             }
         }, {
-            key: 'chooseNone',
-            value: function chooseNone() {
-                var options = arguments[0] === undefined ? {} : arguments[0];
+            key: 'chooseByIds',
 
+            /*chooseNone(options = {}) {
                 if (this.getChosen().length === 0) {
                     return;
                 }
+                  this.removeModels();
+                  this.triggerEvent(false, options);
+            }*/
 
-                this.removeModels();
-
-                this.triggerEvent(false, options);
-            }
-        }, {
-            key: 'chooseByIds',
             value: function chooseByIds() {
                 var _this8 = this;
 
@@ -389,12 +407,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: '_getEvent',
             value: function _getEvent() {
-                if (this.collection.length === this.getChosen().length) {
-                    return 'collection:chose:all';
-                }
-
                 if (this.getChosen().length === 0) {
                     return 'collection:chose:none';
+                }
+
+                if (this.collection.length === this.getChosen().length) {
+                    return 'collection:chose:all';
                 }
 
                 return 'collection:chose:some';
