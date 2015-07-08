@@ -1,6 +1,6 @@
 'use strict';
 
-var _get = function get(_x12, _x13, _x14) { var _again = true; _function: while (_again) { var object = _x12, property = _x13, receiver = _x14; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x12 = parent; _x13 = property; _x14 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x13, _x14, _x15) { var _again = true; _function: while (_again) { var object = _x13, property = _x14, receiver = _x15; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x13 = parent; _x14 = property; _x15 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -21,6 +21,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         factory(_, Backbone);
     }
 })(function (_, Backbone) {
+
+    var _save = function _save(attrs) {
+        var options = arguments[1] === undefined ? {} : arguments[1];
+
+        attrs || (attrs = _.clone(this.attributes));
+
+        delete attrs['chosen:'];
+
+        options.data = JSON.stringify(attrs);
+
+        return Backbone.Model.prototype.save.call(this, attrs, options);
+    };
+
     var Choosy = (function () {
         function Choosy(model) {
             var _this = this;
@@ -29,6 +42,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             this.model = model;
             this.model._chooser = this;
+
+            this.model.save = _save;
 
             _.each(this._publicMethoods(), function (method) {
                 _this.model[method] = _.bind(_this[method], _this);

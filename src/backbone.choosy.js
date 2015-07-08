@@ -15,11 +15,24 @@
     }
 }(function(_, Backbone) {
 
+    const _save = function(attrs, options = {}) {
+
+        attrs || (attrs = _.clone(this.attributes));
+
+        delete attrs['chosen:'];
+
+        options.data = JSON.stringify(attrs);
+
+        return Backbone.Model.prototype.save.call(this, attrs, options);
+    };
+
     class Choosy {
 
         constructor(model) {
             this.model = model;
             this.model._chooser = this;
+
+            this.model.save = _save;
 
             _.each(this._publicMethoods(), (method) => {
                 this.model[method] = _.bind(this[method], this);
@@ -206,7 +219,7 @@
 
             _.each(_.chain([args]).flatten().value(), (model) => {
                 if (this.modelInChosen(model)) {
-                    // Check if continue the cycle
+                    // Check if this continue the cycle
                     return true;
                 }
 
@@ -227,7 +240,7 @@
 
             _.each(_.chain([args]).flatten().value(), (model) => {
                 if (! this.modelInChosen(model)) {
-                    // Check if continue the cycle
+                    // Check if this continue the cycle
                     return true;
                 }
 
