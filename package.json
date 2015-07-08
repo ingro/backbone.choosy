@@ -1,6 +1,6 @@
 {
   "name": "backbone.choosy",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Backbone.Chooser ported to ES6 and UMD",
   "main": "dist/backbone.choosy.js",
   "scripts": {
