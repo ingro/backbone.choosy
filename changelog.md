@@ -1,3 +1,9 @@
+### v1.1.0
+
+#### BREAKING
+
+* The internal model attribute `chosen:` has been renamed to `_chosen`
+
 ### v1.0.0
 
 #### Features

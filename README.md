@@ -7,7 +7,7 @@ This plugins is in fact a simply port written in ES6 of the excellent (but not m
 ## Main difference from Backbone.Chooser
 
 * Unit tests added (even if I'm not very expert at writing them, PR are welcome!);
-* The model's attribute **chosen:** is removed from the attributes hash when the model is saved to the server;
+* The internal model attribute **chosen:** has been renamed to **_chosen** and is removed from the attributes hash when the model is persisted;
 * Fix events in *MultiChooser* for empty collections (thanks to [this PR](https://github.com/brian-mann/Backbone.Chooser/pull/13));
 * Moved the method **chooseNone** to the *BaseChooser*, so you can use it also in the *SingleChooser* (thanks mainly to [this PR](https://github.com/brian-mann/Backbone.Chooser/pull/5));
 
