@@ -27,7 +27,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         attrs || (attrs = _.clone(this.attributes));
 
-        delete attrs['chosen:'];
+        delete attrs['_chosen'];
 
         options.data = JSON.stringify(attrs);
 
@@ -50,7 +50,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             });
 
             this.chosen = false;
-            this.model.set('chosen:', false);
+            this.model.set('_chosen', false);
         }
 
         _createClass(Choosy, [{
@@ -73,7 +73,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 }
 
                 this.chosen = true;
-                this.model.set('chosen:', true, options);
+                this.model.set('_chosen', true, options);
 
                 if (options.silent != true) {
                     this.model.trigger('model:chosen', this.model);
@@ -95,7 +95,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 }
 
                 this.chosen = false;
-                this.model.set('chosen:', false, options);
+                this.model.set('_chosen', false, options);
 
                 if (options.silent != true) {
                     this.model.trigger('model:unchosen', this.model);

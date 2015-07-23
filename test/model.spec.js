@@ -39,7 +39,7 @@ describe('Model', function() {
         assert.property(model, 'isChosen');
 
         assert.isFalse(model._chooser.chosen);
-        assert.isFalse(model.get('chosen:'));
+        assert.isFalse(model.get('_chosen'));
     });
 
     it('should be choosable', function() {
@@ -50,7 +50,7 @@ describe('Model', function() {
 
         assert.isTrue(model.isChosen());
         assert.isTrue(model._chooser.chosen);
-        assert.isTrue(model.get('chosen:'));
+        assert.isTrue(model.get('_chosen'));
     });
 
     it('should be unchoosable', function() {
@@ -62,7 +62,7 @@ describe('Model', function() {
 
         assert.isFalse(model.isChosen());
         assert.isFalse(model._chooser.chosen);
-        assert.isFalse(model.get('chosen:'));
+        assert.isFalse(model.get('_chosen'));
     });
 
     it('should be toggable', function() {
@@ -73,13 +73,13 @@ describe('Model', function() {
 
         assert.isTrue(model.isChosen());
         assert.isTrue(model._chooser.chosen);
-        assert.isTrue(model.get('chosen:'));
+        assert.isTrue(model.get('_chosen'));
 
         model.toggleChoose();
 
         assert.isFalse(model.isChosen());
         assert.isFalse(model._chooser.chosen);
-        assert.isFalse(model.get('chosen:'));
+        assert.isFalse(model.get('_chosen'));
     });
 
     it('triggers the right events', function() {
@@ -99,7 +99,7 @@ describe('Model', function() {
         expect(triggerSpy).to.have.been.calledWith('model:unchosen', model);
     });
 
-    it('should save stripping the chosen: attribute', function() {
+    it('should save stripping the _chosen attribute', function() {
 
         var spy = sinon.spy(Backbone, 'ajax');
 
