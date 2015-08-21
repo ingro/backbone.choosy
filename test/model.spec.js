@@ -110,6 +110,9 @@ describe('Model', function() {
         assert.isTrue(spy.calledOnce, 'Backbone.Sync is called once');
         assert.equal(spy.getCall(0).args[0].data, JSON.stringify({ name: 'Bot', email: 'foo@example.com' }));
 
+        // Simulate a successfull server response
+        model.set({ id:1, name: 'Bot', email: 'foo@example.com' });
+
         model.set('email', 'bar@example.com');
 
         model.save(model.changedAttributes(), { patch: true });

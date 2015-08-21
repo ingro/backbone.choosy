@@ -22,18 +22,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }
 })(function (_, Backbone) {
 
-    var _save = function _save(attrs) {
-        var options = arguments[1] === undefined ? {} : arguments[1];
+    // const _save = function(attrs, options = {}) {
 
-        attrs || (attrs = _.clone(this.attributes));
+    //     attrs || (attrs = _.clone(this.attributes));
 
-        delete attrs['_chosen'];
+    //     delete attrs['_chosen'];
 
-        options.data = JSON.stringify(attrs);
-        options.contentType = 'application/json';
+    //     options.data = JSON.stringify(attrs);
+    //     options.contentType = 'application/json';
 
-        return Backbone.Model.prototype.save.call(this, attrs, options);
-    };
+    //     return Backbone.Model.prototype.save.call(this, attrs, options);
+    // };
 
     var Choosy = (function () {
         function Choosy(model) {
@@ -44,7 +43,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             this.model = model;
             this.model._chooser = this;
 
-            this.model.save = _save;
+            this.modelSave = this.model.save;
 
             _.each(this._publicMethoods(), function (method) {
                 _this.model[method] = _.bind(_this[method], _this);
@@ -55,9 +54,24 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         _createClass(Choosy, [{
+            key: 'save',
+            value: function save(attrs) {
+                var options = arguments[1] === undefined ? {} : arguments[1];
+
+                var chosenValue = this.model.attributes['_chosen'];
+
+                delete this.model.attributes['_chosen'];
+
+                var save = this.modelSave.call(this.model, attrs, options);
+
+                this.model.attributes['_chosen'] = chosenValue;
+
+                return save;
+            }
+        }, {
             key: '_publicMethoods',
             value: function _publicMethoods() {
-                return ['choose', 'unchoose', 'toggleChoose', 'isChosen'];
+                return ['choose', 'unchoose', 'toggleChoose', 'isChosen', 'save'];
             }
         }, {
             key: 'isChosen',

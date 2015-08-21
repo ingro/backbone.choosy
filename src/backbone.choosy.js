@@ -15,17 +15,17 @@
     }
 }(function(_, Backbone) {
 
-    const _save = function(attrs, options = {}) {
+    // const _save = function(attrs, options = {}) {
 
-        attrs || (attrs = _.clone(this.attributes));
+    //     attrs || (attrs = _.clone(this.attributes));
 
-        delete attrs['_chosen'];
+    //     delete attrs['_chosen'];
 
-        options.data = JSON.stringify(attrs);
-        options.contentType = 'application/json';
+    //     options.data = JSON.stringify(attrs);
+    //     options.contentType = 'application/json';
 
-        return Backbone.Model.prototype.save.call(this, attrs, options);
-    };
+    //     return Backbone.Model.prototype.save.call(this, attrs, options);
+    // };
 
     class Choosy {
 
@@ -33,7 +33,7 @@
             this.model = model;
             this.model._chooser = this;
 
-            this.model.save = _save;
+            this.modelSave = this.model.save;
 
             _.each(this._publicMethoods(), (method) => {
                 this.model[method] = _.bind(this[method], this);
@@ -43,8 +43,20 @@
             this.model.set('_chosen', false);
         }
 
+        save(attrs, options = {}) {
+            let chosenValue = this.model.attributes['_chosen'];
+
+            delete this.model.attributes['_chosen'];
+
+            let save = this.modelSave.call(this.model, attrs, options);
+
+            this.model.attributes['_chosen'] = chosenValue;
+
+            return save;
+        }
+
         _publicMethoods() {
-            return ['choose', 'unchoose', 'toggleChoose', 'isChosen'];
+            return ['choose', 'unchoose', 'toggleChoose', 'isChosen', 'save'];
         }
 
         isChosen() {
