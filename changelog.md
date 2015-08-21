@@ -1,3 +1,9 @@
+### v1.1.1
+
+#### Fixes
+
+* Fix override of `Backbone.Model.Save` method to keep data sent as `application/json`
+
 ### v1.1.0
 
 #### BREAKING

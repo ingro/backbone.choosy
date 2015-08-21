@@ -30,6 +30,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         delete attrs['_chosen'];
 
         options.data = JSON.stringify(attrs);
+        options.contentType = 'application/json';
 
         return Backbone.Model.prototype.save.call(this, attrs, options);
     };
